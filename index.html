@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fbfbfa; --ink:#101014; --grey:#70707c; --line:#e6e6e2; --blue:#1f4bff; --blue-soft:#eef1ff;
@@ -134,6 +134,55 @@ footer .base a{color:var(--grey)}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .rv.on{opacity:1;transform:none}
 
+/* ---------- field background ---------- */
+#fieldBg{position:fixed;inset:0;z-index:0;pointer-events:none}
+body>*:not(#fieldBg){position:relative;z-index:1}
+
+/* ---------- hero swarm ---------- */
+.herogrid{display:grid;grid-template-columns:1fr auto;gap:clamp(20px,4vw,56px);align-items:center}
+@media(max-width:900px){.herogrid{grid-template-columns:1fr}}
+.swarmbox{position:relative;width:min(360px,88vw);height:300px;cursor:pointer;justify-self:end}
+@media(max-width:900px){.swarmbox{justify-self:center;height:230px}}
+.swarmbox canvas{position:absolute;inset:0;width:100%;height:100%}
+.swarmcap{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--mono),monospace;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;color:#a5a5ae;
+  display:flex;align-items:center;gap:7px;user-select:none}
+.swarmcap b{color:var(--blue);font-weight:500}
+.swarmcap .dotp{width:8px;height:8px;border-radius:50%;background:var(--blue);position:relative}
+.swarmcap .dotp::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--blue);
+  animation:capping 1.8s ease-out infinite}
+@keyframes capping{from{transform:scale(.5);opacity:.9}to{transform:scale(1.8);opacity:0}}
+
+/* ---------- sound pill ---------- */
+.soundrow{display:flex;justify-content:center;margin-top:clamp(30px,5vh,52px)}
+.snd{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:100px;
+  padding:12px 22px;cursor:pointer;background:#fff;transition:.25s;user-select:none;position:relative;font-family:var(--sans)}
+.snd:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 10px 26px rgba(31,75,255,.14)}
+.snd .bars{display:flex;gap:3px;align-items:flex-end;height:17px}
+.snd .bars i{width:4px;border-radius:2px;background:#c9c9cf;height:30%;transition:background .3s}
+.snd.on .bars i{background:var(--blue);animation:eq .9s ease-in-out infinite}
+.snd.on .bars i:nth-child(1){animation-delay:0s}.snd.on .bars i:nth-child(2){animation-delay:.15s}
+.snd.on .bars i:nth-child(3){animation-delay:.3s}.snd.on .bars i:nth-child(4){animation-delay:.1s}
+.snd.on .bars i:nth-child(5){animation-delay:.25s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+.snd b{font-size:13.5px;font-weight:600}
+.snd .ring{position:absolute;inset:-2px;border-radius:100px;border:2px solid var(--blue);opacity:0;pointer-events:none}
+.snd.pop .ring{animation:ringout .7s ease forwards}
+@keyframes ringout{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.6)}}
+
+/* ---------- goo footer band ---------- */
+.goowrap{position:relative;max-width:760px;height:170px;margin:clamp(34px,6vh,60px) auto 0;
+  border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff;cursor:pointer}
+.goowrap canvas{position:absolute;inset:0;width:100%;height:100%;filter:blur(11px) contrast(38);background:#fff}
+.goocap{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:2;
+  font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;color:#a5a5ae;pointer-events:none;white-space:nowrap}
+.goocap b{color:var(--blue);font-weight:500}
+
+/* ---------- live headings ---------- */
+.shead h2 .L{display:inline-block;transition:transform .18s ease,color .18s ease}
+.shead h2 .L.jump{animation:ljump .55s cubic-bezier(.28,2.4,.4,.9)}
+@keyframes ljump{35%{transform:translateY(-12px) scale(1.08)}70%{transform:translateY(2px)}}
+
 /* native player — the system player opens fullscreen, no custom chrome */
 #nativeV{position:fixed;left:0;bottom:0;width:2px;height:2px;opacity:0;pointer-events:none;background:#000;z-index:300}
 #nativeV:fullscreen{opacity:1;width:100%;height:100%;pointer-events:auto;object-fit:contain}
@@ -154,16 +203,33 @@ footer .base a{color:var(--grey)}
   <a class="cta" href="mailto:urakucer5@gmail.com">Get in touch</a>
 </div></nav>
 
+<canvas id="fieldBg"></canvas>
+
 <header class="hero wrap">
   <span class="tag">Available for projects</span>
-  <h1>AI Motion Designer <em>directing</em> generative video <span class="thin">with a motion-design eye.</span></h1>
-  <div class="sub">
-    <p>Yurii Kucher — AI Motion Designer / Video Editor. I combine hand-crafted Adobe motion with production-grade AI generation — and build the automation that makes it scale. From brief to ad-ready video.</p>
-    <div class="facts">
-      <div class="f"><b>29</b><span>Selected works</span></div>
-      <div class="f"><b>500+</b><span>Clips generated</span></div>
-      <div class="f"><b>4</b><span>Disciplines</span></div>
+  <div class="herogrid">
+    <div>
+      <h1>AI Motion Designer <em>directing</em> generative video <span class="thin">with a motion-design eye.</span></h1>
+      <div class="sub">
+        <p>Yurii Kucher — AI Motion Designer / Video Editor. I combine hand-crafted Adobe motion with production-grade AI generation — and build the automation that makes it scale. From brief to ad-ready video.</p>
+        <div class="facts">
+          <div class="f"><b>29</b><span>Selected works</span></div>
+          <div class="f"><b>500+</b><span>Clips generated</span></div>
+          <div class="f"><b>4</b><span>Disciplines</span></div>
+        </div>
+      </div>
     </div>
+    <div class="swarmbox" id="swarmbox">
+      <canvas id="swarmCv"></canvas>
+      <div class="swarmcap"><span class="dotp"></span>tap to morph — next: <b id="swarmNext">AI</b></div>
+    </div>
+  </div>
+  <div class="soundrow">
+    <button class="snd" id="snd" aria-label="Enable sound">
+      <span class="bars"><i></i><i></i><i></i><i></i><i></i></span>
+      <b id="sndLab">Tap for sound</b>
+      <span class="ring"></span>
+    </button>
   </div>
   <div class="reelrow" id="reelrow"></div>
 </header>
@@ -221,6 +287,10 @@ footer .base a{color:var(--grey)}
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
     <a class="mail" href="mailto:urakucer5@gmail.com">urakucer5@gmail.com</a>
     <a class="mail" style="background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none" href="https://t.me/AfterEfuture" target="_blank" rel="noopener">✈ @AfterEfuture</a>
+  </div>
+  <div class="goowrap" id="goowrap">
+    <canvas id="gooCv"></canvas>
+    <span class="goocap">fluid_break.mp4 — <b>tap to add a drop</b></span>
   </div>
   <div class="base">
     <span>© Yurii Kucher — AI Motion Designer</span>
@@ -349,6 +419,218 @@ nv.addEventListener("ended",()=>{
 });
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&nv.classList.contains("on"))stopNv()});
 document.querySelectorAll(".wk,.rr").forEach(c=>c.addEventListener("click",()=>open(+c.dataset.i)));
+
+/* ================= interactive layer ================= */
+const DPR=Math.min(devicePixelRatio||1,2);
+function fitCv(cv,el){cv.width=Math.max(2,el.clientWidth)*DPR;cv.height=Math.max(2,el.clientHeight)*DPR;
+  cv.getContext("2d").setTransform(DPR,0,0,DPR,0,0);}
+
+/* ---- FIELD: full-page magnetic background ---- */
+(()=>{
+const cv=document.getElementById("fieldBg"),cx=cv.getContext("2d");
+let pts=[],pulses=[];
+const GAP=30;
+function build(){
+  cv.width=innerWidth*DPR;cv.height=innerHeight*DPR;
+  cx.setTransform(DPR,0,0,DPR,0,0);
+  pts=[];
+  for(let y=GAP/2;y<innerHeight;y+=GAP)for(let x=GAP/2;x<innerWidth;x+=GAP)
+    pts.push({x,y,a:Math.random()*7,e:0});
+}
+build();addEventListener("resize",build);
+const M={x:-999,y:-999};
+addEventListener("pointermove",e=>{M.x=e.clientX;M.y=e.clientY},{passive:true});
+addEventListener("pointerdown",e=>{pulses.push({x:e.clientX,y:e.clientY,r:0})},{passive:true});
+let t=0;
+(function tick(){
+  t+=.016;
+  cx.clearRect(0,0,innerWidth,innerHeight);
+  pulses=pulses.filter(p=>p.r<Math.max(innerWidth,innerHeight)*1.1);
+  for(const p of pulses)p.r+=10;
+  for(const p of pts){
+    let ta,e=p.e;
+    if(M.x>-990){
+      const dx=M.x-p.x,dy=M.y-p.y,d=Math.hypot(dx,dy);
+      if(d<230){ta=Math.atan2(dy,dx);e=Math.max(e,(1-d/230)*.9)}
+      else ta=Math.sin(t*.3+p.x*.008)+Math.cos(t*.24+p.y*.01);
+    }else ta=Math.sin(t*.3+p.x*.008)+Math.cos(t*.24+p.y*.01);
+    for(const pl of pulses){
+      const d=Math.abs(Math.hypot(p.x-pl.x,p.y-pl.y)-pl.r);
+      if(d<40){e=1;ta+=(40-d)*.04}
+    }
+    let diff=ta-p.a;diff=Math.atan2(Math.sin(diff),Math.cos(diff));
+    p.a+=diff*.12;p.e=e*.95;
+    const len=5+p.e*6;
+    cx.strokeStyle=p.e>.25?`rgba(31,75,255,${.12+p.e*.5})`:"rgba(165,168,180,.28)";
+    cx.lineWidth=1.2+p.e;
+    cx.beginPath();
+    cx.moveTo(p.x-Math.cos(p.a)*len/2,p.y-Math.sin(p.a)*len/2);
+    cx.lineTo(p.x+Math.cos(p.a)*len/2,p.y+Math.sin(p.a)*len/2);
+    cx.stroke();
+  }
+  requestAnimationFrame(tick);
+})();
+})();
+
+/* ---- SWARM: YK → AI → Motion → Designer ---- */
+(()=>{
+const box=document.getElementById("swarmbox"),cv=document.getElementById("swarmCv"),cx=cv.getContext("2d");
+const nextEl=document.getElementById("swarmNext");
+const WORDS=["YK","AI","Motion","Designer"];
+let wi=0,vis=true;
+fitCv(cv,box);addEventListener("resize",()=>{fitCv(cv,box);retarget()});
+const N=560;
+const P=Array.from({length:N},()=>({x:Math.random()*box.clientWidth,y:Math.random()*box.clientHeight,vx:0,vy:0,tx:0,ty:0}));
+const m={x:-999,y:-999};
+box.addEventListener("pointermove",e=>{const r=box.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+box.addEventListener("pointerleave",()=>{m.x=-999;m.y=-999});
+function sample(word){
+  const w=box.clientWidth,h=box.clientHeight;
+  const oc=document.createElement("canvas");oc.width=w;oc.height=h;
+  const o=oc.getContext("2d");
+  let fs=h*.8;
+  o.font=`900 ${fs}px Instrument Sans,sans-serif`;
+  const tw=o.measureText(word).width;
+  if(tw>w*.92)fs*=w*.92/tw;
+  o.font=`900 ${fs}px Instrument Sans,sans-serif`;
+  o.textAlign="center";o.textBaseline="middle";
+  o.fillText(word,w/2,h/2-8);
+  const d=o.getImageData(0,0,w,h).data,res=[];
+  for(let i=0;i<45000;i++){
+    const x=Math.random()*w|0,y=Math.random()*h|0;
+    if(d[(y*w+x)*4+3]>120)res.push({x,y});
+    if(res.length>=N)break;
+  }
+  while(res.length<N)res.push(res[Math.random()*res.length|0]||{x:w/2,y:h/2});
+  return res;
+}
+let sampledW=0;
+function retarget(){
+  if(box.clientWidth<20||box.clientHeight<20){setTimeout(retarget,400);return}
+  try{
+    const pts2=sample(WORDS[wi%WORDS.length]);
+    sampledW=box.clientWidth;
+    P.forEach((p,i)=>{p.tx=pts2[i].x;p.ty=pts2[i].y});
+    nextEl.textContent=WORDS[(wi+1)%WORDS.length];
+  }catch(e){setTimeout(retarget,600)}
+}
+setInterval(()=>{if(Math.abs(sampledW-box.clientWidth)>6){fitCv(cv,box);retarget()}},800);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(retarget);
+retarget();
+box.addEventListener("click",()=>{
+  P.forEach(p=>{const a=Math.random()*7,s=4+Math.random()*8;p.vx+=Math.cos(a)*s;p.vy+=Math.sin(a)*s});
+  wi++;setTimeout(retarget,140);
+});
+let visT=0;
+(function tick(){
+  requestAnimationFrame(tick);
+  if(visT++%12===0){const r=box.getBoundingClientRect();vis=r.width>10&&r.bottom>-40&&r.top<innerHeight+40}
+  if(!vis)return;
+  cx.clearRect(0,0,box.clientWidth,box.clientHeight);
+  for(const p of P){
+    p.vx+=(p.tx-p.x)*.045;p.vy+=(p.ty-p.y)*.045;
+    const dx=p.x-m.x,dy=p.y-m.y,d2=dx*dx+dy*dy;
+    if(d2<4200){const d=Math.sqrt(d2)||1,f=(1-d/65)*3.2;p.vx+=dx/d*f;p.vy+=dy/d*f}
+    p.vx*=.8;p.vy*=.8;p.x+=p.vx;p.y+=p.vy;
+    cx.fillStyle="rgba(31,75,255,.9)";
+    cx.fillRect(p.x,p.y,2.3,2.3);
+  }
+})();
+})();
+
+/* ---- SOUND pill ---- */
+(()=>{
+const snd=document.getElementById("snd"),lab=document.getElementById("sndLab");
+let ac=null;
+function chirp(){
+  try{
+    ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+    const t=ac.currentTime;
+    [523.25,659.25,783.99].forEach((f,i)=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.type="sine";o.frequency.value=f;
+      g.gain.setValueAtTime(0,t+i*.07);
+      g.gain.linearRampToValueAtTime(.1,t+i*.07+.02);
+      g.gain.exponentialRampToValueAtTime(.001,t+i*.07+.3);
+      o.connect(g);g.connect(ac.destination);o.start(t+i*.07);o.stop(t+i*.07+.35);
+    });
+  }catch(e){}
+}
+snd.addEventListener("click",()=>{
+  const on=snd.classList.toggle("on");
+  lab.textContent=on?"Sound on":"Tap for sound";
+  snd.classList.remove("pop");void snd.offsetWidth;snd.classList.add("pop");
+  if(on)chirp();
+  document.querySelectorAll(".wk video,.rr video").forEach(v=>{v.muted=!on});
+});
+})();
+
+/* ---- GOO footer band ---- */
+(()=>{
+const wrap=document.getElementById("goowrap"),cv=document.getElementById("gooCv"),cx=cv.getContext("2d");
+fitCv(cv,wrap);addEventListener("resize",()=>fitCv(cv,wrap));
+let vis=false,visT=0;
+let blobs=Array.from({length:6},()=>({
+  x:Math.random()*wrap.clientWidth,y:Math.random()*wrap.clientHeight,
+  r:16+Math.random()*20,ph:Math.random()*7,sp:.3+Math.random()*.5,vx:0,vy:0}));
+const m={x:-999,y:-999};
+wrap.addEventListener("pointermove",e=>{const r=wrap.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
+wrap.addEventListener("pointerleave",()=>{m.x=-999;m.y=-999});
+wrap.addEventListener("click",e=>{
+  const r=wrap.getBoundingClientRect();
+  blobs.push({x:e.clientX-r.left,y:e.clientY-r.top,r:6,tr:16+Math.random()*20,
+    ph:Math.random()*7,sp:.4,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6});
+  if(blobs.length>12)blobs.shift();
+});
+let t=0;
+(function tick(){
+  requestAnimationFrame(tick);
+  if(visT++%12===0){const r=wrap.getBoundingClientRect();vis=r.width>10&&r.bottom>-40&&r.top<innerHeight+40;
+    if(vis&&Math.abs(cv.width/DPR-r.width)>6)fitCv(cv,wrap)}
+  if(!vis)return;
+  t+=.016;
+  const w=wrap.clientWidth,h=wrap.clientHeight;
+  cx.clearRect(0,0,w,h);
+  for(const b of blobs){
+    if(b.tr&&b.r<b.tr)b.r+=1.4;
+    b.x+=Math.sin(t*b.sp+b.ph)*.7+b.vx;
+    b.y+=Math.cos(t*b.sp*.8+b.ph)*.5+b.vy;
+    b.vx*=.95;b.vy*=.95;
+    if(m.x>-990){const dx=m.x-b.x,dy=m.y-b.y,d=Math.hypot(dx,dy);
+      if(d<170&&d>8){b.x+=dx/d*1.4;b.y+=dy/d*1.4}}
+    if(b.x<-25)b.x=w+25;if(b.x>w+25)b.x=-25;
+    if(b.y<-25)b.y=h+25;if(b.y>h+25)b.y=-25;
+    cx.fillStyle="#0016e0";
+    cx.beginPath();cx.arc(b.x,b.y,b.r,0,7);cx.fill();
+  }
+  if(m.x>-990){cx.fillStyle="#0016e0";cx.beginPath();cx.arc(m.x,m.y,14,0,7);cx.fill()}
+})();
+})();
+
+/* ---- live section headings ---- */
+(()=>{
+document.querySelectorAll(".shead h2").forEach(h=>{
+  const text=h.textContent;
+  h.textContent="";
+  text.split("").forEach(ch=>{
+    const s=document.createElement("span");s.className="L";s.innerHTML=ch===" "?"&nbsp;":ch;h.appendChild(s);
+  });
+  const Ls=[...h.children];
+  if(matchMedia("(hover:hover)").matches){
+    h.addEventListener("mousemove",e=>{
+      Ls.forEach(l=>{const r=l.getBoundingClientRect();
+        const d=Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2));
+        const f=Math.max(0,1-d/90);
+        l.style.transform=f?`translateY(${-f*9}px)`:"";
+        l.style.color=f>.45?"var(--blue)":"";});
+    });
+    h.addEventListener("mouseleave",()=>Ls.forEach(l=>{l.style.transform="";l.style.color=""}));
+  }
+  Ls.forEach((l,i)=>l.addEventListener("click",()=>{
+    Ls.forEach((o,j)=>setTimeout(()=>{o.classList.remove("jump");void o.offsetWidth;o.classList.add("jump")},Math.abs(j-i)*40));
+  }));
+});
+})();
 </script>
 </body>
 </html>
