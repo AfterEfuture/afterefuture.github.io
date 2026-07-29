@@ -567,6 +567,37 @@ snd.addEventListener("click",()=>{
 })();
 
 
+/* ---- mailto → copy email (works even without a mail client) ---- */
+(()=>{
+const EMAIL="urakucer5@gmail.com";
+document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{
+  a.addEventListener("click",e=>{
+    e.preventDefault();
+    const done=()=>{
+      if(a.dataset.busy)return;a.dataset.busy=1;
+      const orig=a.innerHTML;
+      const w=a.getBoundingClientRect().width;
+      a.style.minWidth=w+"px";
+      a.innerHTML="✓ Copied!";
+      a.style.transition="transform .15s";a.style.transform="scale(1.06)";
+      setTimeout(()=>a.style.transform="",160);
+      setTimeout(()=>{a.innerHTML=orig;a.style.minWidth="";delete a.dataset.busy},1600);
+    };
+    const legacy=()=>{
+      const ta=document.createElement("textarea");ta.value=EMAIL;
+      ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);
+      ta.select();let ok=false;
+      try{ok=document.execCommand("copy")}catch(err){}
+      ta.remove();
+      if(ok)done();else window.location.href=a.href;
+    };
+    if(navigator.clipboard&&navigator.clipboard.writeText)
+      navigator.clipboard.writeText(EMAIL).then(done).catch(legacy);
+    else legacy();
+  });
+});
+})();
+
 /* ---- live section headings ---- */
 (()=>{
 document.querySelectorAll(".shead h2").forEach(h=>{
