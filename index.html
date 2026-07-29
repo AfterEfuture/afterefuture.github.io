@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>YK://PROMPT_OS — Yurii Kucher, AI Motion Designer</title>
+<meta property="og:title" content="Yurii Kucher — AI Motion Designer / Video Editor">
+<meta property="og:description" content="Motion design, directed AI generation and creative automation. 29 selected works.">
+<meta property="og:image" content="https://afterefuture.github.io/media/yurii.jpg">
+<meta property="og:url" content="https://afterefuture.github.io/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04070f; --panel:#080d1a; --line:#12203f; --line2:#1b3160;
+  --blue:#3d7bff; --blue2:#6ea8ff; --cyan:#54e0ff;
+  --txt:#d9e4ff; --dim:#5a6c96; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+::selection{background:var(--blue);color:#fff}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--mono);font-size:14px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:200;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 3px);}
+body::after{content:"";position:fixed;inset:-50%;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 40% at 70% 10%,rgba(61,123,255,.13),transparent 60%),
+             radial-gradient(ellipse 50% 35% at 15% 85%,rgba(84,224,255,.06),transparent 60%);}
+main,header,footer{position:relative;z-index:1}
+a{color:inherit}
+
+/* ---------- top bar ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:10px 18px;background:rgba(4,7,15,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);font-size:12px}
+.bar .logo{font-weight:800;letter-spacing:.08em}
+.bar .logo b{color:var(--blue)}
+.bar nav{display:flex;gap:18px}
+.bar nav a{text-decoration:none;color:var(--dim);transition:color .2s}
+.bar nav a:hover{color:var(--cyan)}
+.bar .st{display:flex;align-items:center;gap:7px;color:var(--dim)}
+.dot{width:7px;height:7px;border-radius:50%;background:#2ee06e;box-shadow:0 0 8px #2ee06e;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.4}}
+@media(max-width:640px){.bar nav{display:none}}
+
+/* ---------- hero terminal ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:90px 18px 40px;max-width:1060px;margin:0 auto;width:100%}
+.term{border:1px solid var(--line2);border-radius:12px;background:rgba(8,13,26,.9);overflow:hidden;
+  box-shadow:0 0 80px rgba(61,123,255,.14), inset 0 0 60px rgba(61,123,255,.03)}
+.term-h{display:flex;align-items:center;gap:8px;padding:11px 14px;border-bottom:1px solid var(--line);color:var(--dim);font-size:11px}
+.term-h i{width:11px;height:11px;border-radius:50%;background:var(--line2);display:inline-block}
+.term-h i:first-child{background:#ff5f57}.term-h i:nth-child(2){background:#febc2e}.term-h i:nth-child(3){background:#28c840}
+.term-b{padding:22px 20px 26px;min-height:280px}
+.tl{margin-bottom:6px;word-break:break-word}
+.p{color:var(--blue2)} .c{color:var(--dim)} .ok{color:#2ee06e} .hl{color:var(--cyan)}
+.cursor{display:inline-block;width:8px;height:16px;background:var(--cyan);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero h1{font-family:'Space Grotesk';font-size:clamp(34px,7vw,84px);font-weight:700;line-height:1.02;letter-spacing:-.03em;margin:34px 0 10px}
+.hero h1 span{color:var(--blue)}
+.hero .sub{color:var(--dim);max-width:560px}
+.hero .keys{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.k{border:1px solid var(--line2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--blue2);text-decoration:none;transition:.2s;background:rgba(61,123,255,.05)}
+.k:hover{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 0 24px rgba(61,123,255,.5)}
+
+/* ---------- section frame ---------- */
+section{max-width:1060px;margin:0 auto;padding:70px 18px 10px}
+.shead{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.shead .no{color:var(--blue);font-size:12px}
+.shead h2{font-family:'Space Grotesk';font-size:clamp(22px,3.6vw,36px);font-weight:700;letter-spacing:-.02em}
+.shead .cmd{color:var(--dim);font-size:12px}
+.shead .rule{flex:1;height:1px;background:var(--line);min-width:60px}
+
+/* ---------- works = generation cards ---------- */
+.batch{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+@media(max-width:520px){.batch{grid-template-columns:repeat(2,1fr);gap:10px}}
+.gen{border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden;cursor:pointer;
+  transition:transform .22s,border-color .22s,box-shadow .22s;position:relative;animation:matIn .5s ease both}
+@keyframes matIn{from{opacity:0;transform:translateY(14px)}}
+.gen:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 14px 40px rgba(61,123,255,.22)}
+.gen .fr{aspect-ratio:9/16;position:relative;overflow:hidden;background:#060a14}
+.gen img,.gen video{width:100%;height:100%;object-fit:cover;display:block}
+.gen video{position:absolute;inset:0}
+.gen .scan{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,rgba(84,224,255,.16) 50%,transparent 100%);
+  transform:translateY(-100%);pointer-events:none}
+.gen:hover .scan{animation:scan 1.1s ease}
+@keyframes scan{to{transform:translateY(100%)}}
+.gen .meta{padding:9px 11px;font-size:10.5px;color:var(--dim);border-top:1px solid var(--line)}
+.gen .meta .t{color:var(--txt);font-size:12px;font-weight:700;margin-bottom:3px;letter-spacing:.02em}
+.gen .badge{position:absolute;top:8px;left:8px;background:rgba(4,7,15,.72);backdrop-filter:blur(6px);
+  border:1px solid var(--line2);color:var(--cyan);font-size:9px;padding:2px 7px;border-radius:5px;letter-spacing:.1em;z-index:2}
+.gen .dur{position:absolute;top:8px;right:8px;background:rgba(4,7,15,.72);color:var(--txt);font-size:9.5px;padding:2px 6px;border-radius:5px;z-index:2}
+
+/* ---------- process pipeline ---------- */
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:step}
+@media(max-width:840px){.pipe{grid-template-columns:repeat(2,1fr)}}
+.step{border:1px solid var(--line);border-radius:10px;padding:18px 16px;background:var(--panel);position:relative;transition:border-color .2s}
+.step:hover{border-color:var(--blue)}
+.step::before{counter-increment:step;content:"0" counter(step);position:absolute;top:14px;right:14px;color:var(--line2);font-weight:800;font-size:20px}
+.step .ic{font-size:20px;margin-bottom:10px}
+.step h3{font-size:13px;color:var(--cyan);margin-bottom:6px;letter-spacing:.04em}
+.step p{font-size:11.5px;color:var(--dim)}
+
+/* ---------- stack / about ---------- */
+.duo{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+@media(max-width:840px){.duo{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:20px}
+.card h3{font-size:12px;color:var(--blue);letter-spacing:.14em;margin-bottom:14px}
+.about p{margin-bottom:12px;color:#aab8dd;font-size:13px}
+.about .sig{color:var(--cyan)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:12px;text-align:center}
+.stat b{display:block;font-family:'Space Grotesk';font-size:26px;color:var(--txt)}
+.stat span{font-size:10px;color:var(--dim);letter-spacing:.08em}
+.tools li{list-style:none;display:flex;justify-content:space-between;align-items:center;padding:9px 2px;border-bottom:1px dashed var(--line);font-size:12.5px}
+.tools li:last-child{border:none}
+.lvl{display:flex;gap:3px}
+.lvl i{width:14px;height:5px;border-radius:2px;background:var(--line2)}
+.lvl i.on{background:var(--blue);box-shadow:0 0 6px rgba(61,123,255,.6)}
+.opid{display:flex;gap:16px;align-items:center;margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+.opid img{width:88px;height:88px;object-fit:cover;border-radius:12px;border:1px solid var(--line2);
+  box-shadow:0 0 26px rgba(61,123,255,.25);filter:saturate(.92)}
+.opid .who b{display:block;font-size:15px;color:var(--txt);letter-spacing:.02em}
+.opid .who .r{color:var(--cyan);font-size:11.5px;margin-top:3px}
+.opid .who .s{color:var(--dim);font-size:10.5px;margin-top:5px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.chips span{font-size:10.5px;color:var(--blue2);border:1px solid var(--line2);border-radius:6px;padding:4px 9px;background:rgba(61,123,255,.06)}
+.grp{margin-bottom:14px}
+.grp .gh{font-size:10.5px;color:var(--cyan);letter-spacing:.14em;margin-bottom:7px}
+.grp .gv{font-size:12px;color:#aab8dd;line-height:1.8}
+.grp .gnote{font-size:10.5px;color:var(--dim);margin-top:5px;line-height:1.6}
+.clinks{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.tg-btn{display:inline-block;font-family:var(--mono);border:1px solid var(--line2);color:var(--blue2);text-decoration:none;
+  padding:15px 30px;border-radius:10px;font-weight:700;font-size:15px;transition:.25s;background:rgba(61,123,255,.06)}
+.tg-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 0 40px rgba(61,123,255,.4)}
+
+/* ---------- contact ---------- */
+.contact{margin:70px 0 0;padding:60px 18px 80px;border-top:1px solid var(--line);text-align:center}
+.contact h2{font-family:'Space Grotesk';font-size:clamp(30px,6vw,64px);font-weight:700;letter-spacing:-.02em}
+.contact h2 span{color:var(--blue)}
+.contact p{color:var(--dim);margin:12px 0 26px}
+.big-btn{display:inline-block;font-family:var(--mono);background:var(--blue);color:#fff;text-decoration:none;
+  padding:15px 34px;border-radius:10px;font-weight:700;font-size:15px;transition:.25s;box-shadow:0 0 40px rgba(61,123,255,.35)}
+.big-btn:hover{background:var(--cyan);color:#04070f;box-shadow:0 0 60px rgba(84,224,255,.55);transform:translateY(-2px)}
+footer{padding:18px;text-align:center;color:var(--dim);font-size:11px;border-top:1px solid var(--line)}
+
+/* ---------- viewer ---------- */
+.viewer{position:fixed;inset:0;z-index:300;background:rgba(2,4,10,.95);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center}
+.viewer.open{display:flex}
+.stage{position:relative;height:min(100svh,100%);aspect-ratio:9/16;max-width:100vw;display:flex;align-items:center}
+@media(min-width:640px){.stage{height:90svh}}
+.stage video{width:100%;height:100%;object-fit:contain;background:#000;border-radius:0}
+@media(min-width:640px){.stage video{border-radius:12px;border:1px solid var(--line2)}}
+.v-top{position:absolute;top:0;left:0;right:0;z-index:5;padding:max(12px,env(safe-area-inset-top)) 14px 30px;
+  background:linear-gradient(rgba(0,0,0,.6),transparent);display:flex;justify-content:space-between;align-items:flex-start;border-radius:12px 12px 0 0}
+.v-title{font-size:13px;font-weight:700}.v-sub{font-size:10px;color:var(--cyan);margin-top:2px}
+.v-close{width:32px;height:32px;border-radius:8px;background:rgba(61,123,255,.2);border:1px solid var(--line2);color:#fff;font-size:14px;cursor:pointer}
+.v-arrow{position:fixed;top:50%;transform:translateY(-50%);z-index:6;width:44px;height:44px;border-radius:10px;
+  background:rgba(8,13,26,.8);border:1px solid var(--line2);color:var(--blue2);font-size:18px;cursor:pointer;display:none}
+@media(hover:hover) and (min-width:700px){.viewer.open .v-arrow{display:block}}
+.v-prev{left:24px}.v-next{right:24px}
+.v-arrow:disabled{opacity:.25}
+.v-count{position:fixed;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  font-size:11px;color:var(--dim);z-index:6;background:rgba(4,7,15,.6);padding:4px 12px;border-radius:6px;border:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="logo">YK://<b>PROMPT_OS</b> <span style="color:var(--dim)">v2.0</span></div>
+  <nav>
+    <a href="#works">/works</a><a href="#process">/process</a><a href="#stack">/stack</a><a href="#contact">/contact</a>
+  </nav>
+  <div class="st"><span class="dot"></span>ONLINE</div>
+</div>
+
+<header class="hero">
+  <div class="term">
+    <div class="term-h"><i></i><i></i><i></i>&nbsp;yurii@studio — generation session</div>
+    <div class="term-b" id="termOut"></div>
+  </div>
+  <h1>I direct <span>AI</span> like a camera crew.</h1>
+  <p class="sub">Yurii Kucher — AI Motion Designer. Prompts in, cinema out: UGC ads, product motion, character animation. 29 selected generations below.</p>
+  <div class="keys">
+    <a class="k" href="#works">▶ run portfolio --all</a>
+    <a class="k" href="#process">◇ cat process.md</a>
+    <a class="k" href="#contact">✉ ssh yurii@hire.me</a>
+  </div>
+</header>
+
+<main>
+<section id="works">
+  <div class="shead"><span class="no">01</span><h2>Generations</h2><span class="rule"></span><span class="cmd">$ ls ./output --sort=discipline</span></div>
+  <div id="batches"></div>
+</section>
+
+<section id="process">
+  <div class="shead"><span class="no">02</span><h2>Pipeline</h2><span class="rule"></span><span class="cmd">$ cat process.md</span></div>
+  <div class="pipe">
+    <div class="step"><div class="ic">▚</div><h3>BRIEF → SPEC</h3><p>I decompose a brief into shots, pacing and voice — a machine-readable spec before a single frame exists.</p></div>
+    <div class="step"><div class="ic">◈</div><h3>FRAME DESIGN</h3><p>First frames are engineered, not rolled: identity, light, lens and composition locked before generation.</p></div>
+    <div class="step"><div class="ic">▶</div><h3>DIRECTED GEN</h3><p>Veo / Imagen / custom pipelines under precise prompt direction — delivery, syllable pacing, motion arcs.</p></div>
+    <div class="step"><div class="ic">✦</div><h3>MOTION FINISH</h3><p>After Effects polish: type, rhythm, transitions, sound. The 10% that separates AI output from ads that ship.</p></div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="shead"><span class="no">03</span><h2>Operator</h2><span class="rule"></span><span class="cmd">$ whoami --verbose</span></div>
+  <div class="duo">
+    <div class="card about">
+      <h3>OPERATOR.ID</h3>
+      <div class="opid">
+        <img src="media/yurii_sq.jpg" alt="Yurii Kucher" onerror="this.style.display='none'">
+        <div class="who">
+          <b>Yurii Kucher</b>
+          <div class="r">AI Motion Designer / Video Editor</div>
+          <div class="s">status: <span style="color:#2ee06e">online</span> · open for projects</div>
+        </div>
+      </div>
+      <p>Motion designer and video editor who went all-in on AI video before it was obvious. I direct models like a camera crew — and build the automation around them so creative iteration happens at machine speed.</p>
+      <p class="sig">// output types:</p>
+      <div class="chips">
+        <span>motion graphics</span><span>UI animation</span><span>social creatives</span>
+        <span>shorts &amp; reels</span><span>animated presentations</span><span>YouTube video</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>STACK.JSON</h3>
+      <div class="grp"><div class="gh">▸ motion/</div>
+        <div class="gv">After Effects · Premiere Pro · Photoshop · Illustrator · Figma · Adobe XD · CapCut</div></div>
+      <div class="grp"><div class="gh">▸ ai/</div>
+        <div class="gv">ElevenLabs · Flow · Higgsfield · Krea · Midjourney · Leonardo · NIM · Weavy.ai · Magnific <span style="color:var(--dim)">+ more</span></div>
+        <div class="gnote"># I know which model fits each task, which aggregator runs it best — and how to get past model limitations to the result.</div></div>
+      <div class="grp"><div class="gh">▸ automation/</div>
+        <div class="gv">Claude · Codex · Gemini</div>
+        <div class="gnote"># I automate creative workflows end-to-end and can set up automated creative production tailored to your company's process.</div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="contact" id="contact">
+  <h2>Ready to <span>generate</span>?</h2>
+  <p>$ connect --channel any — response time: fast</p>
+  <div class="clinks">
+    <a class="big-btn" href="mailto:urakucer5@gmail.com">✉ urakucer5@gmail.com</a>
+    <a class="tg-btn" href="https://t.me/AfterEfuture" target="_blank" rel="noopener">◈ tg: @AfterEfuture</a>
+  </div>
+</div>
+<footer>YK://PROMPT_OS — designed &amp; generated by Yurii Kucher · <a href="simple.html" style="color:var(--blue2)">simple version</a></footer>
+
+<div class="viewer" id="viewer">
+  <button class="v-arrow v-prev" id="vPrev">‹</button>
+  <div class="stage">
+    <div class="v-top">
+      <div><div class="v-title" id="vTitle"></div><div class="v-sub" id="vSub"></div></div>
+      <button class="v-close" id="vClose">✕</button>
+    </div>
+    <video id="vVideo" playsinline controls preload="auto"></video>
+  </div>
+  <button class="v-arrow v-next" id="vNext">›</button>
+  <div class="v-count" id="vCount"></div>
+</div>
+
+<script>
+const MEDIA="media/";
+const CATS={
+  motion:{label:"MOTION",model:"after_effects · handcraft"},
+  aim:{label:"AI × MOTION",model:"veo-3 + after_effects"},
+  ai:{label:"AI",model:"veo-3 · imagen"},
+  ugc:{label:"UGC · AI",model:"veo-3 · talking_head"},
+};
+const W=[
+ {cat:"motion",slug:"Motion__Authenticator.MD",title:"Authenticator",dur:26},
+ {cat:"motion",slug:"Motion__Printer.MD",title:"Printer",dur:21},
+ {cat:"motion",slug:"Motion__Speeche__inner_video",title:"Speechy",dur:25},
+ {cat:"motion",slug:"Motion__Revealory_inner_video",title:"Revealory",dur:17},
+ {cat:"aim",slug:"AI+Motion__AI_tools_01",title:"AI Tools",dur:26},
+ {cat:"aim",slug:"AI+Motion__AI_Detector",title:"AI Detector",dur:25},
+ {cat:"aim",slug:"AI+Motion__AI_Detector_02",title:"AI Detector II",dur:42},
+ {cat:"aim",slug:"AI+Motion__Voice_Notes",title:"Voice Notes",dur:42},
+ {cat:"aim",slug:"AI+Motion__E-com_01",title:"E-commerce",dur:84},
+ {cat:"aim",slug:"AI+Motion__AI_tools_02",title:"AI Tools II",dur:50},
+ {cat:"aim",slug:"AI+Motion__Recorder_01",title:"Recorder",dur:32},
+ {cat:"aim",slug:"AI+Motion__Podcast",title:"Podcast",dur:26},
+ {cat:"aim",slug:"AI+Motion__Metrix_01",title:"Metrix",dur:21},
+ {cat:"aim",slug:"AI+Motion__Interview",title:"Interview",dur:17},
+ {cat:"aim",slug:"AI+Motion__AI_Girl",title:"AI Girl",dur:22},
+ {cat:"ai",slug:"AI__Lumway",title:"Lumway",dur:10},
+ {cat:"ai",slug:"AI__Chars_Vitamins",title:"Vitamins Characters",dur:31},
+ {cat:"ai",slug:"AI__Auth_01.MD",title:"Authenticator",dur:35},
+ {cat:"ai",slug:"AI__QR_01",title:"QR",dur:22},
+ {cat:"ai",slug:"AI__Remote",title:"Remote",dur:21},
+ {cat:"ai",slug:"AI__TV_remote",title:"TV Remote",dur:18},
+ {cat:"ai",slug:"AI__IG_photos",title:"IG Photos",dur:17},
+ {cat:"ai",slug:"AI__AI_Girl_01",title:"AI Girl",dur:15},
+ {cat:"ugc",slug:"AI__UGC_Talking_head__Learniq",title:"Learniq",dur:37},
+ {cat:"ugc",slug:"AI__UGC_Talking_head__Girl",title:"Girl",dur:69},
+ {cat:"ugc",slug:"AI__UGC_Talking_head__E-com_01",title:"E-commerce I",dur:80},
+ {cat:"ugc",slug:"AI__UGC_Talking_head__E-Com_02",title:"E-commerce II",dur:56},
+ {cat:"ugc",slug:"AI__UGC_Talking_head__Recorder_02",title:"Recorder",dur:59},
+ {cat:"ugc",slug:"AI__UGC_Talking_head__Speaker",title:"Speaker",dur:43},
+];
+const dur=s=>s>=60?`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`:`0:${String(s).padStart(2,"0")}`;
+const seed=str=>{let h=0;for(const c of str)h=(h*31+c.charCodeAt(0))>>>0;return String(h).slice(0,6)};
+
+/* terminal typing */
+const LINES=[
+ ["p","yurii@studio",""," ~ % ",0],
+];
+const SCRIPT=[
+ {t:'<span class="p">yurii@studio ~ %</span> load identity.yaml',d:30},
+ {t:'<span class="c">name:</span> Yurii Kucher &nbsp;<span class="c">role:</span> <span class="hl">AI Motion Designer / Video Editor</span>',d:16},
+ {t:'<span class="p">yurii@studio ~ %</span> generate --portfolio --clips 29 --style "cinematic"',d:26},
+ {t:'<span class="c">▸ loading models&nbsp;</span><span class="ok">✓ veo-3 ✓ imagen ✓ after_effects</span>',d:14},
+ {t:'<span class="c">▸ rendering 29/29 </span><span class="hl">████████████████████</span> <span class="ok">100%</span>',d:14},
+ {t:'<span class="ok">✓ portfolio ready.</span> <span class="c">scroll to explore ↓</span>',d:20},
+];
+const termOut=document.getElementById("termOut");
+(async()=>{
+  for(const line of SCRIPT){
+    const el=document.createElement("div");el.className="tl";termOut.appendChild(el);
+    const html=line.t;let shown="";
+    // type by character on the text content of a temp element
+    const tmp=document.createElement("div");tmp.innerHTML=html;
+    const plain=tmp.textContent;
+    for(let i=0;i<=plain.length;i++){
+      el.textContent=plain.slice(0,i);
+      await new Promise(r=>setTimeout(r,line.d));
+    }
+    el.innerHTML=html;
+  }
+  const c=document.createElement("div");c.className="tl";
+  c.innerHTML='<span class="p">yurii@studio ~ %</span> <span class="cursor"></span>';
+  termOut.appendChild(c);
+})();
+
+/* works */
+const batches=document.getElementById("batches");
+let list=[...W];
+const order=["motion","aim","ai","ugc"];
+let html="";
+order.forEach(cat=>{
+  const items=W.filter(w=>w.cat===cat);
+  html+=`<div style="margin:26px 0 10px;color:var(--dim);font-size:11px;letter-spacing:.12em">
+    <span style="color:var(--cyan)">▸ batch</span> ${CATS[cat].label} <span style="opacity:.6">— model: ${CATS[cat].model} — ${items.length} outputs</span></div>
+  <div class="batch">`+
+  items.map(w=>{
+    const i=W.indexOf(w);
+    return `<div class="gen" data-i="${i}" style="animation-delay:${(i%8)*40}ms">
+      <div class="fr">
+        <span class="badge">${CATS[w.cat].label}</span><span class="dur">${dur(w.dur)}</span>
+        <img loading="lazy" src="${MEDIA}${encodeURIComponent(w.slug)}.jpg" alt="${w.title}">
+        <div class="scan"></div>
+      </div>
+      <div class="meta"><div class="t">${w.title}</div>seed ${seed(w.slug)} · 9:16 · ${dur(w.dur)}</div>
+    </div>`;
+  }).join("")+`</div>`;
+});
+batches.innerHTML=html;
+
+/* hover preview */
+if(matchMedia("(hover:hover)").matches){
+  document.querySelectorAll(".gen").forEach(c=>{
+    let pv=null;
+    c.addEventListener("mouseenter",()=>{
+      const w=W[+c.dataset.i];
+      pv=document.createElement("video");
+      pv.src=MEDIA+encodeURIComponent(w.slug)+".mp4";
+      pv.loop=true;pv.playsInline=true;
+      pv.addEventListener("canplay",()=>{if(!pv)return;pv.muted=false;pv.play().catch(()=>{if(!pv)return;pv.muted=true;pv.play().catch(()=>{})})});
+      c.querySelector(".fr").insertBefore(pv,c.querySelector(".scan"));
+    });
+    c.addEventListener("mouseleave",()=>{if(pv){pv.remove();pv=null}});
+  });
+}
+
+/* counters */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;io.unobserve(e.target);
+  const b=e.target,n=+b.dataset.n;let cur=0;
+  const step=()=>{cur=Math.min(n,cur+Math.max(1,Math.round(n/40)));b.textContent=cur+(n>=100?"+":"");if(cur<n)requestAnimationFrame(step)};
+  step();
+}),{threshold:.5});
+document.querySelectorAll(".stat b").forEach(b=>io.observe(b));
+
+/* viewer */
+const viewer=document.getElementById("viewer"),vVideo=document.getElementById("vVideo"),
+vTitle=document.getElementById("vTitle"),vSub=document.getElementById("vSub"),vCount=document.getElementById("vCount"),
+vPrev=document.getElementById("vPrev"),vNext=document.getElementById("vNext");
+let cur=-1;
+function open(i){cur=i;const w=W[i];
+  vVideo.src=MEDIA+encodeURIComponent(w.slug)+".mp4";vVideo.poster=MEDIA+encodeURIComponent(w.slug)+".jpg";
+  vTitle.textContent=w.title;vSub.textContent=CATS[w.cat].label+" — seed "+seed(w.slug);
+  vCount.textContent=(i+1)+" / "+W.length;vPrev.disabled=i===0;vNext.disabled=i===W.length-1;
+  viewer.classList.add("open");document.body.style.overflow="hidden";vVideo.play().catch(()=>{});}
+function close(){viewer.classList.remove("open");vVideo.pause();vVideo.removeAttribute("src");vVideo.load();document.body.style.overflow="";cur=-1}
+function step2(d){const n=cur+d;if(n>=0&&n<W.length)open(n)}
+document.querySelectorAll(".gen").forEach(c=>c.addEventListener("click",()=>open(+c.dataset.i)));
+document.getElementById("vClose").addEventListener("click",close);
+vPrev.addEventListener("click",()=>step2(-1));vNext.addEventListener("click",()=>step2(1));
+viewer.addEventListener("click",e=>{if(e.target===viewer)close()});
+document.addEventListener("keydown",e=>{if(!viewer.classList.contains("open"))return;
+  if(e.key==="Escape")close();if(e.key==="ArrowLeft")step2(-1);if(e.key==="ArrowRight")step2(1)});
+let tx=0,ty=0;
+viewer.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+viewer.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.4)step2(dx<0?1:-1);
+  else if(dy>90&&Math.abs(dy)>Math.abs(dx)*1.4)close()},{passive:true});
+</script>
+</body>
+</html>
