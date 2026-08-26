@@ -7,8 +7,8 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:title" content="Yurii Kucher — AI Motion Designer / Video Editor">
-<meta property="og:description" content="Motion design, directed AI generation and creative automation. 30 selected works.">
+<meta property="og:title" content="Yurii Kucher — AI Motion Designer">
+<meta property="og:description" content="Motion design, AI-generated video and hybrid AI × Motion work — 31 selected works.">
 <meta property="og:image" content="https://afterefuture.github.io/media/yurii.jpg">
 <meta property="og:url" content="https://afterefuture.github.io/">
 <meta property="og:type" content="website">
@@ -209,7 +209,7 @@ body>*:not(#fieldBg){position:relative;z-index:1}
       <div class="sub">
         <p>Yurii Kucher — AI Motion Designer / Video Editor. I combine hand-crafted Adobe motion with production-grade AI generation — and build the automation that makes it scale. From brief to ad-ready video.</p>
         <div class="facts">
-          <div class="f"><b>30</b><span>Selected works</span></div>
+          <div class="f"><b>31</b><span>Selected works</span></div>
           <div class="f"><b>500+</b><span>Clips generated</span></div>
           <div class="f"><b>4</b><span>Disciplines</span></div>
         </div>
@@ -309,6 +309,7 @@ const W=[
  {cat:"motion",slug:"Motion__Speeche__inner_video",title:"Speechy",dur:25},
  {cat:"motion",slug:"Motion__Revealory_inner_video",title:"Revealory",dur:17},
  {cat:"aim",slug:"AI+Motion__Zachary",title:"Zachary",dur:28},
+ {cat:"aim",slug:"AI+Motion__Zeely",title:"Zeely",dur:30},
  {cat:"aim",slug:"AI+Motion__AI_tools_01",title:"AI Tools",dur:26},
  {cat:"aim",slug:"AI+Motion__AI_Detector",title:"AI Detector",dur:25},
  {cat:"aim",slug:"AI+Motion__AI_Detector_02",title:"AI Detector II",dur:42},
@@ -338,7 +339,7 @@ const W=[
 const dur=s=>s>=60?`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`:`0:${String(s).padStart(2,"0")}`;
 
 /* featured strip */
-const FEATURED=["AI+Motion__Zachary","Motion__Authenticator.MD","AI+Motion__AI_tools_01","AI__UGC_Talking_head__Learniq","AI+Motion__AI_Detector"];
+const FEATURED=["AI+Motion__Zachary","Motion__Authenticator.MD","AI+Motion__AI_tools_01","AI__UGC_Talking_head__Learniq","AI+Motion__Zeely"];
 document.getElementById("reelrow").innerHTML=FEATURED.map(slug=>{
   const w=W.find(x=>x.slug===slug);
   return `<div class="rr" data-i="${W.indexOf(w)}">
