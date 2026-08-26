@@ -339,7 +339,7 @@ const W=[
 const dur=s=>s>=60?`${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`:`0:${String(s).padStart(2,"0")}`;
 
 /* featured strip */
-const FEATURED=["AI+Motion__Zachary","Motion__Authenticator.MD","AI+Motion__AI_tools_01","AI__UGC_Talking_head__Learniq","AI+Motion__Zeely"];
+const FEATURED=["AI+Motion__Zachary","AI+Motion__Zeely","AI+Motion__AI_tools_01","AI__UGC_Talking_head__Learniq","Motion__Authenticator.MD"];
 document.getElementById("reelrow").innerHTML=FEATURED.map(slug=>{
   const w=W.find(x=>x.slug===slug);
   return `<div class="rr" data-i="${W.indexOf(w)}">
